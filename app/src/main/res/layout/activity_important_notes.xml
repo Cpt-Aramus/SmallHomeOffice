@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Shopping_List"
+    android:orientation="horizontal">
+
+    <ListView
+        android:id="@+id/display"
+        android:layout_width="match_parent"
+        android:layout_height="464dp" />
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="ADD"
+        android:onClick="onClick"
+        android:layout_alignParentRight="true"
+        tools:ignore="OnClick" />
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@android:color/darker_gray"
+        android:ems="10"
+        android:hint="type in!"
+        android:inputType="textPersonName" />
+</RelativeLayout>

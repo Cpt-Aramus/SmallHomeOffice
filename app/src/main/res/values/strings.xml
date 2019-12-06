@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SmallHomeOffice</string>
+    <string name="willkommen">Willkommen!</string>
+    <string name="to_do_liste">To-Do-Liste</string>
+    <string name="einkaufliste">Einkaufliste</string>
+    <string name="wichtig_termine">Wichtig / Termine</string>
+    <string name="habit_tracker">Habit Tracker</string>
+    <string name="Empty" />
+</resources>

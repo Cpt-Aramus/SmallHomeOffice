@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    tools:background="@android:color/background_light"
+    tools:context=".MainMenu"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:text="@string/willkommen"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#FFFFFF"
+        tools:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/switchToDo"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/roundbuttonshape"
+        android:onClick="startToDoList"
+        android:text="@string/to_do_liste"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_weight="4"
+        android:background="#A1887F"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/switchEinkauf"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/roundbuttonshape"
+        android:onClick="startBuying"
+        android:text="@string/einkaufliste"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_weight="4"
+        android:background="#A1887F"
+        android:visibility="invisible"
+        tools:background="#F7F2F1" />
+
+    <Button
+        android:id="@+id/switchImportant"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/roundbuttonshape"
+        android:onClick="startImportant"
+        android:text="@string/wichtig_termine"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_weight="4"
+        android:background="#A1887F"
+        android:visibility="invisible"
+        tools:background="#FFFFFF" />
+
+    <Button
+        android:id="@+id/switchHabitTracker"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/roundbuttonshape"
+        android:onClick="startHabitTracker"
+        android:text="@string/habit_tracker"
+        android:textSize="20sp"
+        tools:text="Habit Tracker" />
+
+</LinearLayout>
