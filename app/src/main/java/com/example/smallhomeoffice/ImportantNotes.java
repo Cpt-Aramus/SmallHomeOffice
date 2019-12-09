@@ -19,11 +19,14 @@ import java.util.ArrayList;
 /**
  * This class creates and manages the list of important notes.
  */
-public class ImportantNotes extends AppCompatActivity implements  View.OnClickListener {
+public class ImportantNotes extends AppCompatActivity implements  View.OnClickListener, CorrectingListItemDialog.DialogListener {
 
     EditText input;
     Button add_button;
     ListView display;
+
+    //needed for replacing a listitem after editing
+    int position;
 
     ArrayList<String> notes;
     ArrayAdapter<String> notes_adapter;
@@ -64,18 +67,16 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_btn:
-                String written_item = input.getText().toString();
-                if (!written_item.equals("")) {
-                    notes_adapter.add(written_item);
-                    input.setText("");
+        if (v.getId() == R.id.add_btn) {
+            String written_item = input.getText().toString();
+            if (!written_item.equals("")) {
+                notes_adapter.add(written_item);
+                input.setText("");
 
-                    FileLibaryNotes.save_List(notes, this);
+                FileLibaryNotes.save_List(notes, this);
 
-                    Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+                Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -92,6 +93,8 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add("Delete");
+        menu.add("edit");
+        menu.add("move");
     }
 
     // Bugfixing: https://www.youtube.com/watch?v=Pq9YQl0nfEk
@@ -106,13 +109,48 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
 
         AdapterView.AdapterContextMenuInfo listItem_info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        if(item.getTitle() == "Delete") {
+        position = listItem_info.position;
+
+        switch (item.getTitle().toString()) {
+            case "Delete":
             notes.remove(listItem_info.position);
             notes_adapter.notifyDataSetChanged();
             FileLibaryNotes.save_List(notes, this);
 
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            break;
+            case "edit":
+                // Creates the dialog window, saving the text to our list is also controlled in the belonging class
+                openDialog();
+                break;
+            case "move":
+                notes.remove(listItem_info.position);
+                notes_adapter.notifyDataSetChanged();
+                FileLibary_ToDoList.save_List(notes, this);
+
+                Toast.makeText(this, "Moved!", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + item.getTitle());
         }
+
         return true;
+    }
+
+    private void openDialog() {
+
+        CorrectingListItemDialog dialog = new CorrectingListItemDialog();
+        dialog.show(getSupportFragmentManager(), "example dialog");
+
+    }
+
+    @Override
+    public void applyText(String testString) {
+
+        notes.remove(position);
+        notes.add(position, testString );
+        notes_adapter.notifyDataSetChanged();
+        FileLibary_ToDoList.save_List(notes, this);
+        Toast.makeText(this, "Edited", Toast.LENGTH_SHORT).show();
     }
 }

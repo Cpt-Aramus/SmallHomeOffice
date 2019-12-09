@@ -19,11 +19,14 @@ import java.util.ArrayList;
 /**
  * This class creates and manages the shopping list.
  */
-public class Shopping_List extends AppCompatActivity implements View.OnClickListener {
+public class Shopping_List extends AppCompatActivity implements View.OnClickListener, CorrectingListItemDialog.DialogListener {
 
     EditText input_item;
     Button add_button;
     ListView display;
+
+    //needed for replacing a listitem after editing
+    int position;
 
     ArrayList<String> goods;
     ArrayAdapter<String> goods_adapter;
@@ -65,18 +68,16 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_btn:
-                String written_item = input_item.getText().toString();
-                if(!written_item.equals("")){
-                    goods_adapter.add(written_item);
-                    input_item.setText("");
+        if (v.getId() == R.id.add_btn) {
+            String written_item = input_item.getText().toString();
+            if (!written_item.equals("")) {
+                goods_adapter.add(written_item);
+                input_item.setText("");
 
-                    FileLibary_ShoppingList.save_List(goods, this);
+                FileLibary_ShoppingList.save_List(goods, this);
 
-                    Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+                Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -93,6 +94,8 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add("Delete");
+        menu.add("edit");
+        menu.add("move");
     }
 
     // Bugfixing: https://www.youtube.com/watch?v=Pq9YQl0nfEk
@@ -107,12 +110,47 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
 
         AdapterView.AdapterContextMenuInfo listItem_info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        if(item.getTitle() == "Delete") {
+        position = listItem_info.position;
+
+        switch (item.getTitle().toString()) {
+            case "Delete":
             goods.remove(listItem_info.position);
             goods_adapter.notifyDataSetChanged();
             FileLibary_ShoppingList.save_List(goods, this);
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            break;
+
+            case "edit":
+                // Creates the dialog window, saving the text to our list is also controlled in the belonging class
+                openDialog();
+                break;
+            case "move":
+                goods.remove(listItem_info.position);
+                goods_adapter.notifyDataSetChanged();
+                FileLibary_ToDoList.save_List(goods, this);
+
+                Toast.makeText(this, "Moved!", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + item.getTitle());
         }
         return true;
+    }
+
+    private void openDialog() {
+
+        CorrectingListItemDialog dialog = new CorrectingListItemDialog();
+        dialog.show(getSupportFragmentManager(), "example dialog");
+
+    }
+
+    @Override
+    public void applyText(String testString) {
+
+        goods.remove(position);
+        goods.add(position, testString );
+        goods_adapter.notifyDataSetChanged();
+        FileLibary_ToDoList.save_List(goods, this);
+        Toast.makeText(this, "Edited", Toast.LENGTH_SHORT).show();
     }
 }
