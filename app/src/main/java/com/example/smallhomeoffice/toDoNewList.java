@@ -73,20 +73,18 @@ public class toDoNewList extends AppCompatActivity implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_btn:
-                String written_item = edit.getText().toString();
-                if (!written_item.equals("")) {
-                    tasks_adapter.add(written_item);
-                    // Field gets empty after saving
-                    edit.setText("");
+        if (v.getId() == R.id.add_btn) {
+            String written_item = edit.getText().toString();
+            if (!written_item.equals("")) {
+                tasks_adapter.add(written_item);
+                // Field gets empty after saving
+                edit.setText("");
 
-                    // Saving To-Do-List
-                    FileLibary_ToDoList.save_List(tasks, this);
+                // Saving To-Do-List
+                FileLibary_ToDoList.save_List(tasks, this);
 
-                    Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+                Toast.makeText(this, "Item added to List!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -103,9 +101,9 @@ public class toDoNewList extends AppCompatActivity implements View.OnClickListen
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add("delete");
-        menu.add("edit");
-        menu.add("move");
+        menu.add("Delete");
+        menu.add("Edit");
+        menu.add("Move");
     }
 
 
@@ -129,18 +127,18 @@ public class toDoNewList extends AppCompatActivity implements View.OnClickListen
       position = listItem_info.position;
 
         switch (item.getTitle().toString()) {
-            case "delete":
+            case "Delete":
                 tasks.remove(listItem_info.position);
                 tasks_adapter.notifyDataSetChanged();
                 FileLibary_ToDoList.save_List(tasks, this);
 
                 Toast.makeText(this, "Deleted!", Toast.LENGTH_SHORT).show();
                 break;
-            case "edit":
+            case "Edit":
                 // Creates the dialog window, saving the text to our list is also controlled in the belonging class
                 openDialog();
                break;
-            case "move":
+            case "Move":
                 tasks.remove(listItem_info.position);
                 tasks_adapter.notifyDataSetChanged();
                 FileLibary_ToDoList.save_List(tasks, this);

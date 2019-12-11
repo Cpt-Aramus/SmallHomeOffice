@@ -94,8 +94,8 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add("Delete");
-        menu.add("edit");
-        menu.add("move");
+        menu.add("Edit");
+        menu.add("Move");
     }
 
     // Bugfixing: https://www.youtube.com/watch?v=Pq9YQl0nfEk
@@ -120,11 +120,11 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
             break;
 
-            case "edit":
+            case "Edit":
                 // Creates the dialog window, saving the text to our list is also controlled in the belonging class
                 openDialog();
                 break;
-            case "move":
+            case "Move":
                 goods.remove(listItem_info.position);
                 goods_adapter.notifyDataSetChanged();
                 FileLibary_ToDoList.save_List(goods, this);
@@ -150,7 +150,7 @@ public class Shopping_List extends AppCompatActivity implements View.OnClickList
         goods.remove(position);
         goods.add(position, testString );
         goods_adapter.notifyDataSetChanged();
-        FileLibary_ToDoList.save_List(goods, this);
+        FileLibary_ShoppingList.save_List(goods, this);
         Toast.makeText(this, "Edited", Toast.LENGTH_SHORT).show();
     }
 }

@@ -93,8 +93,8 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add("Delete");
-        menu.add("edit");
-        menu.add("move");
+        menu.add("Edit");
+        menu.add("Move");
     }
 
     // Bugfixing: https://www.youtube.com/watch?v=Pq9YQl0nfEk
@@ -119,11 +119,11 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
 
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
             break;
-            case "edit":
+            case "Edit":
                 // Creates the dialog window, saving the text to our list is also controlled in the belonging class
                 openDialog();
                 break;
-            case "move":
+            case "Move":
                 notes.remove(listItem_info.position);
                 notes_adapter.notifyDataSetChanged();
                 FileLibary_ToDoList.save_List(notes, this);
@@ -150,7 +150,7 @@ public class ImportantNotes extends AppCompatActivity implements  View.OnClickLi
         notes.remove(position);
         notes.add(position, testString );
         notes_adapter.notifyDataSetChanged();
-        FileLibary_ToDoList.save_List(notes, this);
+        FileLibaryNotes.save_List(notes, this);
         Toast.makeText(this, "Edited", Toast.LENGTH_SHORT).show();
     }
 }
